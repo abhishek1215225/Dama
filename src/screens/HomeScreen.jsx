@@ -121,7 +121,7 @@ const HomeScreen = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Topbar />
+      <Topbar  navigation={navigation}/>
       <View style={styles.space} />
 
 

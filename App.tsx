@@ -130,7 +130,7 @@ const App = () => {
             <MyTabs />
             )}
         </Stack.Screen>
-        <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
+      
         <Stack.Screen name="Event" component={Event} options={{headerShown:false}}/>
         <Stack.Screen name="SingUp" component={SingUp} options={{headerShown:false}} />
         <Stack.Screen name="Otp" component={Otp} options={{headerShown:false}}  />
@@ -149,6 +149,7 @@ const App = () => {
         <Stack.Screen name="Forgot" component={Forgot} options={{headerShown:false}}/>
         <Stack.Screen name="Emailotp" component={Emailotp} options={{headerShown:false}}/>
         <Stack.Screen name="ResetPassword" component={ResetPassword} options={{headerShown:false}}/>
+        <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
           </Stack.Navigator>
 
     </NavigationContainer>

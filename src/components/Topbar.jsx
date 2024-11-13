@@ -1,6 +1,6 @@
-import React, { useState , useEffect} from 'react';
-import { Text, View, Image, TextInput, StyleSheet, Modal, Pressable, ImageBackground,Dimensions, ScrollView ,Alert ,FlatList, TouchableOpacity  } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, Image, TextInput, StyleSheet, Modal, Pressable, ImageBackground, Dimensions, ScrollView, Alert, FlatList, TouchableOpacity } from 'react-native';
+
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon1 from 'react-native-vector-icons/MaterialIcons';
 import ToggleButton from './Togglebutton';
@@ -10,28 +10,27 @@ import Icon2 from 'react-native-vector-icons/Entypo';
 import { firebase } from '../firebaseConfig';
 const { width, height } = Dimensions.get('window');
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import { CommonActions } from '@react-navigation/native';
 const membershipData = [
   {
-      id: 1,
-      type: 'Student Membership',
-      price: 'KES  2,500',
-      description: 'Lorem ipsum dolor sit amet consectetuer',
-      flag: require('../assests/group.png'),
+    id: 1,
+    type: 'Student Membership',
+    price: 'KES  2,500',
+    description: 'Lorem ipsum dolor sit amet consectetuer',
+    flag: require('../assests/group.png'),
   },
   {
-      id: 2,
-      type: 'Professional Membership',
-      price: 'KES  4,500',
-      description: 'Lorem ipsum dolor sit amet consectetuer',
-      flag: require('../assests/profess.png'),
+    id: 2,
+    type: 'Professional Membership',
+    price: 'KES  4,500',
+    description: 'Lorem ipsum dolor sit amet consectetuer',
+    flag: require('../assests/profess.png'),
   },
   {
-      id: 3,
-      type: 'Corporate Membership',
-      price: 'KES  6,500',
-      description: 'Lorem ipsum dolor sit amet consectetuer',
-      flag: require('../assests/cor.png'),
+    id: 3,
+    type: 'Corporate Membership',
+    price: 'KES  6,500',
+    description: 'Lorem ipsum dolor sit amet consectetuer',
+    flag: require('../assests/cor.png'),
   },
 ];
 
@@ -39,9 +38,7 @@ const membershipData = [
 
 
 
-const Topbar = () => {
-
-   const navigation = useNavigation();
+const Topbar = ({navigation}) => {
   const [selectedValue, setSelectedValue] = useState('option1');
   const [modalVisible, setModalVisible] = useState(false);
   const [profileModalVisible, setProfileModalVisible] = useState(false);
@@ -49,7 +46,7 @@ const Topbar = () => {
   const [paymentModalVisible, setPaymentModalVisible] = useState(false);
   const [passwordModalVisible, setPasswordModalVisible] = useState(false);
   const [membershipModalVisible, setmembershipModalVisible] = useState(false);
- const [profileModal1Visible, setProfileModal1Visible] = useState(false);
+  const [profileModal1Visible, setProfileModal1Visible] = useState(false);
   const [memberModal1Visible, setmemberModal1Visible] = useState(false);
   const [selectMembership, setSelectMembership] = useState(null);
   const [editnameVisible, seteditnameVisible] = useState(false);
@@ -66,11 +63,11 @@ const Topbar = () => {
   const maxHeight = 100;
 
 
-  const handlebiomodalopen = () =>{
+  const handlebiomodalopen = () => {
     setbioModal1Visible(true);
   };
 
-  const handlebiomodalclose = () =>{
+  const handlebiomodalclose = () => {
     setbioModal1Visible(false);
   };
 
@@ -87,134 +84,134 @@ const Topbar = () => {
   const Bioregex = /^[A-Za-z]+(?: [A-Za-z]+){4,}$/;
 
   const titleregex = /^[A-Za-z]{3,}$/;
-  const companyregex =  /^[A-Za-z]+(?: [A-Za-z]+){1,}$/;
+  const companyregex = /^[A-Za-z]+(?: [A-Za-z]+){1,}$/;
 
 
 
 
-const handleBio = (text) =>{
-  setBio(text);
-  if(!Bioregex.test(text)){
+  const handleBio = (text) => {
+    setBio(text);
+    if (!Bioregex.test(text)) {
       setbioError('Minimun 5 words');
- }else{
-  setbioError('');
- }
-};
+    } else {
+      setbioError('');
+    }
+  };
 
-const handleTitle = (text) =>{
-  setTittle(text);
-  if(!titleregex.test(text)){
+  const handleTitle = (text) => {
+    setTittle(text);
+    if (!titleregex.test(text)) {
       settitleError('Minimun 3 words');
- }else{
-  settitleError('');
- }
-};
+    } else {
+      settitleError('');
+    }
+  };
 
-const handleCompany = (text) =>{
-  setCompany(text);
-  if(!companyregex.test(text)){
+  const handleCompany = (text) => {
+    setCompany(text);
+    if (!companyregex.test(text)) {
       setcompanyError('Minimun 1 words');
- }else{
-  setcompanyError('');
- }
-};
+    } else {
+      setcompanyError('');
+    }
+  };
 
 
- const handlefirstname = (text) =>{
-  setFirstName(text);
-  if(!firstNameregex.test(text)){
+  const handlefirstname = (text) => {
+    setFirstName(text);
+    if (!firstNameregex.test(text)) {
       setfirstNameerror('Minimun 3 words');
- }else{
-  setfirstNameerror('');
- }
-};
+    } else {
+      setfirstNameerror('');
+    }
+  };
 
-const handlelastname = (text) =>{
-  setLastName(text);
-   if(!lastNameregex.test(text)){
+  const handlelastname = (text) => {
+    setLastName(text);
+    if (!lastNameregex.test(text)) {
       setlastNameerror('Minimun 2 words');
- }else{
-  setlastNameerror('');
- }
-};
+    } else {
+      setlastNameerror('');
+    }
+  };
 
 
 
 
 
-   const [firstName, setFirstName] = useState('');
+  const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [middlename, setMiddlename] = useState('');
   const [tittle, setTittle] = useState('');
   const [company, setCompany] = useState('');
-    const [bio, setBio] = useState('');
+  const [bio, setBio] = useState('');
 
-    const [oldPassword, setOldPassword] = useState('');
-    const [newPassword, setNewPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
-    const [newPassworderror,setNewPassworderror] = useState('');
-    const [confirmPassworderror,setconfirmPassworderror] = useState('');
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [newPassworderror, setNewPassworderror] = useState('');
+  const [confirmPassworderror, setconfirmPassworderror] = useState('');
 
 
-    //apply regex on new and confirm password
+  //apply regex on new and confirm password
 
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
 
-    const handlePasswordChange = (text) => {
-      setNewPassword(text);
-      if (!passwordRegex.test(text)) {
-        setNewPassworderror('Password must be at least 8 characters long and include an uppercase letter, a number, and a special character.');
-      } else {
-        setNewPassworderror('');
-      }
-    };
-    const handleconfirmPasswordChange = (text) => {
-      setConfirmPassword(text);
-      if (!passwordRegex.test(text)) {
-        setconfirmPassworderror('Password must be at least 8 characters long and include an uppercase letter, a number, and a special character.');
-      } else {
-        setconfirmPassworderror('');
-      }
-    };
+  const handlePasswordChange = (text) => {
+    setNewPassword(text);
+    if (!passwordRegex.test(text)) {
+      setNewPassworderror('Password must be at least 8 characters long and include an uppercase letter, a number, and a special character.');
+    } else {
+      setNewPassworderror('');
+    }
+  };
+  const handleconfirmPasswordChange = (text) => {
+    setConfirmPassword(text);
+    if (!passwordRegex.test(text)) {
+      setconfirmPassworderror('Password must be at least 8 characters long and include an uppercase letter, a number, and a special character.');
+    } else {
+      setconfirmPassworderror('');
+    }
+  };
 
-    // change user password using old password
+  // change user password using old password
 
-    const handleChangePassword = async (userDetails) => {
+  const handleChangePassword = async (userDetails) => {
 
-      try {
-        const User = firebase.auth().currentUser;
-        if (User) {
-          const userdoc = await firebase.firestore().collection('users').doc(User.uid).get();
-         if(userdoc.exists){
-            const userdetail = userdoc.data();
-            if(!newPassworderror && !confirmPassworderror){
-          if(userdetail.password === oldPassword){
-            if(newPassword === confirmPassword){
-              await User.updatePassword(newPassword);
-              await firebase.firestore().collection('users').doc(User.uid).update({
-                password: newPassword,
-              });
+    try {
+      const User = firebase.auth().currentUser;
+      if (User) {
+        const userdoc = await firebase.firestore().collection('users').doc(User.uid).get();
+        if (userdoc.exists) {
+          const userdetail = userdoc.data();
+          if (!newPassworderror && !confirmPassworderror) {
+            if (userdetail.password === oldPassword) {
+              if (newPassword === confirmPassword) {
+                await User.updatePassword(newPassword);
+                await firebase.firestore().collection('users').doc(User.uid).update({
+                  password: newPassword,
+                });
                 setPasswordModalVisible(false);
-          }else {
-            console.log('new password and confirm password doesnt match');
+              } else {
+                console.log('new password and confirm password doesnt match');
+              }
+            } else {
+              console.log('old password is incorrect');
+            }
           }
-        }else{
-          console.log('old password is incorrect');
-        }
-      }
 
-         }else{
-          console.log('no data found');
-         }
         } else {
-          console.log('No user logged in');
+          console.log('no data found');
         }
-      }catch(error3){
-        console.error('Error fetching user details:', error3);
+      } else {
+        console.log('No user logged in');
       }
-    };
+    } catch (error3) {
+      console.error('Error fetching user details:', error3);
+    }
+  };
 
-    //set user details to display in profile
+  //set user details to display in profile
 
 
   useEffect(() => {
@@ -251,27 +248,27 @@ const handlelastname = (text) =>{
       }
       if (!company) {
         setcompanyError('Company is required');
-        }
-        if (!tittle) {
-            settitleError('Title  is required');
-            }
+      }
+      if (!tittle) {
+        settitleError('Title  is required');
+      }
 
 
-if(firstName && lastName && tittle && company &&  bio && !titleError && !companyError && !bioError && !firstNameerror && !lastNameerror ){
+      if (firstName && lastName && tittle && company && bio && !titleError && !companyError && !bioError && !firstNameerror && !lastNameerror) {
 
-      console.log('Saving user details...');
-      await firebase.firestore().collection('users').doc(userid).update({
-        firstName,
-        lastName,
-        middlename,
-        company,
-        tittle,
-        bio,
-      });
+        console.log('Saving user details...');
+        await firebase.firestore().collection('users').doc(userid).update({
+          firstName,
+          lastName,
+          middlename,
+          company,
+          tittle,
+          bio,
+        });
 
-      seteditnameVisible(false);
-      setbioModal1Visible(false);
-    }
+        seteditnameVisible(false);
+        setbioModal1Visible(false);
+      }
     } catch (error1) {
       console.error('Error saving user details:', error1);
       Alert.alert('Error', error1.message);
@@ -310,7 +307,7 @@ if(firstName && lastName && tittle && company &&  bio && !titleError && !company
           const userDoc = await firebase.firestore().collection('users').doc(user.uid).get();
 
           if (userDoc.exists) {
-          const useretails = userDoc.data();
+            const useretails = userDoc.data();
             setUserDetails(useretails);
             setFirstName(useretails.firstName || '');
             setLastName(useretails.lastName || '');
@@ -338,11 +335,11 @@ if(firstName && lastName && tittle && company &&  bio && !titleError && !company
   //   return <ActivityIndicator size="large" color="#0000ff" />;
   // }
 
-  const handlememberopen = (membership) =>{
+  const handlememberopen = (membership) => {
     setmemberModal1Visible(true);
     setSelectMembership(membership);
   };
-  const handlememberclose = () =>{
+  const handlememberclose = () => {
     setmemberModal1Visible(false);
     setSelectMembership(null);
   };
@@ -418,7 +415,7 @@ if(firstName && lastName && tittle && company &&  bio && !titleError && !company
       // Alert.alert('Logged Out', 'You have successfully logged out.');
       console.log('Logged Out', 'You have successfully logged out.');
       // Navigate to Login screen
-      navigation.navigate('DetailsScreen');
+      navigation.navigate('Login');
       console.log('anything');
     } catch (error) {
       Alert.alert('Logout Error', error.message);
@@ -430,34 +427,34 @@ if(firstName && lastName && tittle && company &&  bio && !titleError && !company
 
   const renderMembership = ({ item }) => (
     <View>
-    <View style={styles.student}>
+      <View style={styles.student}>
         <View style={styles.imagecontainer}>
-        <Image source={item.flag} style={styles.image2} />
+          <Image source={item.flag} style={styles.image2} />
         </View>
         <Text style={styles.head}>{item.type}</Text>
         <Text style={styles.des}>{item.description}</Text>
         <View style={styles.line3} />
         <View style={styles.student1}>
-            <Text style={styles.ammount}>{item.price}</Text>
-            <Text style={styles.month}>/Month</Text>
+          <Text style={styles.ammount}>{item.price}</Text>
+          <Text style={styles.month}>/Month</Text>
         </View>
         <Pressable onPress={() => handlememberopen(item)} style={styles.button}>
-                <Text style={styles.buttontext}>Upgrade</Text>
+          <Text style={styles.buttontext}>Upgrade</Text>
 
         </Pressable>
 
+      </View>
+      <View style={styles.modelthick} />
     </View>
-    <View style={styles.modelthick} />
-    </View>
-);
+  );
 
   return (
     <View style={styles.container}>
-      <Pressable onPress={handleOpen}>
+      <Pressable onPress={() => handleOpen()}>
         <Image source={require('../assests/profile.png')} style={styles.image} />
       </Pressable>
       <Pressable onPress={() => navigation.navigate('Search')}>
-      <TextInput style={styles.search} placeholder="Search" placeholderTextColor="#94A3B8" editable={false}  />
+        <TextInput style={styles.search} placeholder="Search" placeholderTextColor="#94A3B8" editable={false} />
       </Pressable>
       <Pressable onPress={() => navigation.navigate('First')}>
         <Image source={require('../assests/logo/massage.png')} style={styles.logo} />
@@ -465,78 +462,78 @@ if(firstName && lastName && tittle && company &&  bio && !titleError && !company
 
       {/* Main modal */}
       {modalVisible && (
-      <Modal
-        transparent={true}
-        onRequestClose={handleClose}
-        visible={modalVisible}
-      >
-        <View style={styles.work}>
-          <View>
-            <View style={styles.overlay}>
-              <View style={styles.modal}>
-              <Pressable >
-                <View style={styles.profile}>
-                  <Image source={require('../assests/profile.png')} style={styles.profileimage} />
-                  <View>
-                    <Text style={styles.profilename}>{firstName}</Text>
-                    <Text style={styles.profiledes}>{tittle}</Text>
-                  </View>
-                  </View>
+        <Modal
+          transparent={true}
+          onRequestClose={handleClose}
+          visible={modalVisible}
+        >
+          <View style={styles.work}>
+            <View>
+              <View style={styles.overlay}>
+                <View style={styles.modal}>
+                  <Pressable >
+                    <View style={styles.profile}>
+                      <Image source={require('../assests/profile.png')} style={styles.profileimage} />
+                      <View>
+                        <Text style={styles.profilename}>{firstName}</Text>
+                        <Text style={styles.profiledes}>{tittle}</Text>
+                      </View>
+                    </View>
                   </Pressable>
-                <View style={styles.line} />
-                <View>
-                  <View style={styles.containerprofile}>
-                    <Image source={require('../assests/logo/profilesy.png')} style={styles.profileimg} />
-                    <Pressable onPress={handleProfileOpen}>
-                      <Text style={styles.name}>Profile</Text>
-                    </Pressable>
-                  </View>
-                  <View style={styles.containerprofile}>
+                  <View style={styles.line} />
+                  <View>
+                    <View style={styles.containerprofile}>
+                      <Image source={require('../assests/logo/profilesy.png')} style={styles.profileimg} />
+                      <Pressable onPress={handleProfileOpen}>
+                        <Text style={styles.name}>Profile</Text>
+                      </Pressable>
+                    </View>
+                    <View style={styles.containerprofile}>
 
-                    <Image source={require('../assests/logo/membership.png')} style={styles.profileimg} />
-                    <Pressable onPress={handleMembershipOpen}>
-                      <Text style={styles.name}>Membership</Text>
-                    </Pressable>
-                  </View>
-                  <View style={styles.containerprofile}>
-                    <Image source={require('../assests/logo/Notifications.png')} style={styles.profileimg} />
-                    <Pressable onPress={() => {}}>
-                      <Text style={styles.name}>Notifications</Text>
-                    </Pressable>
-                  </View>
-                  <View style={styles.containerprofile}>
-                    <Image source={require('../assests/logo/Calendar.png')} style={styles.profileimg} />
-                    <Pressable onPress={() => {}}>
-                      <Text style={styles.name}>Manage Event</Text>
-                    </Pressable>
-                  </View>
-                  <View style={styles.containerprofile}>
-                    <Image source={require('../assests/logo/Info.png')} style={styles.profileimg} />
-                    <Pressable onPress={handleAboutOpen}>
-                      <Text style={styles.name}>About Dama Kenya</Text>
-                    </Pressable>
-                  </View>
-                  <View style={styles.containerprofile}>
-                    <Image source={require('../assests/logo/Logout.png')} style={styles.profileimg} />
-                    <TouchableOpacity   onPress={handleLogout}>
-                      <Text style={styles.Log}>Log Out</Text>
-                    </TouchableOpacity>
-                  </View>
-                  <View style={styles.endco}>
-                    <View style={styles.line2} />
-                    <Text style={styles.pro}>Professional Membership</Text>
-                    <Text style={styles.valid}>Valid till: 30th Dec 2024</Text>
+                      <Image source={require('../assests/logo/membership.png')} style={styles.profileimg} />
+                      <Pressable onPress={handleMembershipOpen}>
+                        <Text style={styles.name}>Membership</Text>
+                      </Pressable>
+                    </View>
+                    <View style={styles.containerprofile}>
+                      <Image source={require('../assests/logo/Notifications.png')} style={styles.profileimg} />
+                      <Pressable onPress={() => { }}>
+                        <Text style={styles.name}>Notifications</Text>
+                      </Pressable>
+                    </View>
+                    <View style={styles.containerprofile}>
+                      <Image source={require('../assests/logo/Calendar.png')} style={styles.profileimg} />
+                      <Pressable onPress={() => { }}>
+                        <Text style={styles.name}>Manage Event</Text>
+                      </Pressable>
+                    </View>
+                    <View style={styles.containerprofile}>
+                      <Image source={require('../assests/logo/Info.png')} style={styles.profileimg} />
+                      <Pressable onPress={handleAboutOpen}>
+                        <Text style={styles.name}>About Dama Kenya</Text>
+                      </Pressable>
+                    </View>
+                    <View style={styles.containerprofile}>
+                      <Image source={require('../assests/logo/Logout.png')} style={styles.profileimg} />
+                      <TouchableOpacity onPress={() => handleLogout()}>
+                        <Text style={styles.Log}>Log Out</Text>
+                      </TouchableOpacity>
+                    </View>
+                    <View style={styles.endco}>
+                      <View style={styles.line2} />
+                      <Text style={styles.pro}>Professional Membership</Text>
+                      <Text style={styles.valid}>Valid till: 30th Dec 2024</Text>
+                    </View>
                   </View>
                 </View>
               </View>
             </View>
+            <View style={styles.free}>
+              <Pressable onPress={handleClose} style={styles.free} />
+            </View>
           </View>
-          <View style={styles.free}>
-            <Pressable onPress={handleClose} style={styles.free} />
-          </View>
-        </View>
-      </Modal>
-       )};
+        </Modal>
+      )};
       {/* Profile Modal */}
       <Modal
         transparent={true}
@@ -565,7 +562,7 @@ if(firstName && lastName && tittle && company &&  bio && !titleError && !company
               <Text style={styles.personprofile}>{tittle}</Text>
               <View style={styles.editicon2}>
                 <TouchableOpacity onPress={handlenameeditopen}>
-                <Icon1 name="mode-edit" color="black" size={20} />
+                  <Icon1 name="mode-edit" color="black" size={20} />
                 </TouchableOpacity>
               </View>
             </View>
@@ -574,11 +571,11 @@ if(firstName && lastName && tittle && company &&  bio && !titleError && !company
               <View style={styles.mybio}>
                 <Text style={styles.biotitle}>My Bio</Text>
                 <TouchableOpacity onPress={handlebiomodalopen}>
-                <Icon1 name="mode-edit" color="black" size={20} />
+                  <Icon1 name="mode-edit" color="black" size={20} />
                 </TouchableOpacity>
               </View>
               <Text style={styles.bio}>
-              {bio}
+                {bio}
               </Text>
             </View>
           </View>
@@ -616,18 +613,18 @@ if(firstName && lastName && tittle && company &&  bio && !titleError && !company
               </Pressable>
             </View>
             <View>
-            <Pressable onPress={handlePasswordOpen}>
-            <View style={styles.profileflex}>
-              <View>
-                <Text style={styles.biotitle}>Password Reset</Text>
-                <Text style={styles.personprofile}>Update Password</Text>
-              </View>
-              <View>
-                <Icon name="right" size={20} color="#64748B" />
-              </View>
+              <Pressable onPress={handlePasswordOpen}>
+                <View style={styles.profileflex}>
+                  <View>
+                    <Text style={styles.biotitle}>Password Reset</Text>
+                    <Text style={styles.personprofile}>Update Password</Text>
+                  </View>
+                  <View>
+                    <Icon name="right" size={20} color="#64748B" />
+                  </View>
+                </View>
+              </Pressable>
             </View>
-            </Pressable>
-          </View>
           </View>
           <View style={styles.modelthick} />
           <View style={styles.delete}>
@@ -639,7 +636,7 @@ if(firstName && lastName && tittle && company &&  bio && !titleError && !company
       </Modal>
 
 
-       {/* Profile Modal1 */}
+      {/* Profile Modal1 */}
       <Modal
         transparent={true}
         animationType="slide"
@@ -653,41 +650,41 @@ if(firstName && lastName && tittle && company &&  bio && !titleError && !company
           </View>
           <View style={styles.modelthick} />
           <View style={styles.secondtab3}>
-          <View>
-            <ImageBackground source={require('../assests/profilebackground.png')} style={styles.background} />
-            <Image source={require('../assests/profile.png')} style={styles.profilephoto} />
-
-            <View style={styles.persondetail}>
-              <Text style={styles.personname}>Leandro Trossard</Text>
-              <Text style={styles.personbrand}>Karatasi Brands</Text>
-              <Text style={styles.personprofile}>Accountant</Text>
-              <View style={styles.threebutton}>
             <View>
-              <Pressable style={styles.messagebutton}>
-                <Text style={styles.buttontext}>Message</Text>
-                </Pressable>
-            </View>
-            <Pressable style={styles.callbutton}>
-                <Text style={styles.callbuttontext}>Call</Text>
-                </Pressable>
-            <View  style={styles.share} >
-                <Icon2 name="share" size={24} color="#0966C3" />
-              </View>
-              </View>
+              <ImageBackground source={require('../assests/profilebackground.png')} style={styles.background} />
+              <Image source={require('../assests/profile.png')} style={styles.profilephoto} />
+
+              <View style={styles.persondetail}>
+                <Text style={styles.personname}>Leandro Trossard</Text>
+                <Text style={styles.personbrand}>Karatasi Brands</Text>
+                <Text style={styles.personprofile}>Accountant</Text>
+                <View style={styles.threebutton}>
+                  <View>
+                    <Pressable style={styles.messagebutton}>
+                      <Text style={styles.buttontext}>Message</Text>
+                    </Pressable>
+                  </View>
+                  <Pressable style={styles.callbutton}>
+                    <Text style={styles.callbuttontext}>Call</Text>
+                  </Pressable>
+                  <View style={styles.share} >
+                    <Icon2 name="share" size={24} color="#0966C3" />
+                  </View>
+                </View>
 
               </View>
-            <View style={styles.modelthick} />
-            <View style={styles.biocontainer}>
-              <View style={styles.mybio}>
-                <Text style={styles.biotitle}>My Bio</Text>
+              <View style={styles.modelthick} />
+              <View style={styles.biocontainer}>
+                <View style={styles.mybio}>
+                  <Text style={styles.biotitle}>My Bio</Text>
+                </View>
+                <Text style={styles.bio}>
+                  Lorem ipsum dolor sit amet consectetur. Tellus egestas senectus pellentesque a sapien ultricies. Eget ultricies cursus quam auctor sed semper. Nisl elementum amet natoque ipsum quis sed. Convallis vestibulum nisi neque vel massa.
+                </Text>
               </View>
-              <Text style={styles.bio}>
-                Lorem ipsum dolor sit amet consectetur. Tellus egestas senectus pellentesque a sapien ultricies. Eget ultricies cursus quam auctor sed semper. Nisl elementum amet natoque ipsum quis sed. Convallis vestibulum nisi neque vel massa.
-              </Text>
             </View>
           </View>
-          </View>
-          </ScrollView>
+        </ScrollView>
       </Modal>
 
 
@@ -705,22 +702,22 @@ if(firstName && lastName && tittle && company &&  bio && !titleError && !company
           </View>
           <View style={styles.modelthick} />
           <View style={styles.secondtab}>
-          <Text style={styles.title1}>About Us</Text>
+            <Text style={styles.title1}>About Us</Text>
             <Text style={styles.terms}>Lorem ipsum dolor sit amet consectetur. Tellus egestas senectus pellentesque  a sapien ultricies. Eget ultricies cursus quam auctor sed semper. Nisl elementum amet natoque ipsum quis sed. Convallis vestibulum nisi neque vel massa.</Text>
-            </View>
-            <View>
-            <Image source={require('../assests/aboutus.png')} style={styles.imageabout}/>
-            </View>
-            <View style={styles.secondtab}>
-                <Text style={styles.vision}>Vision</Text>
-                <Text style={styles.terms} >Lorem ipsum dolor sit amet consectetur. Tellus egestas senectus</Text>
-
-                    <Text style={styles.vision}>Mission</Text>
-                <Text style={styles.terms} >pellentesque a sapien ultricies. Eget ultricies cursus quam auctor sed semper.</Text>
-            </View>
-
-
           </View>
+          <View>
+            <Image source={require('../assests/aboutus.png')} style={styles.imageabout} />
+          </View>
+          <View style={styles.secondtab}>
+            <Text style={styles.vision}>Vision</Text>
+            <Text style={styles.terms} >Lorem ipsum dolor sit amet consectetur. Tellus egestas senectus</Text>
+
+            <Text style={styles.vision}>Mission</Text>
+            <Text style={styles.terms} >pellentesque a sapien ultricies. Eget ultricies cursus quam auctor sed semper.</Text>
+          </View>
+
+
+        </View>
       </Modal>
 
       {/* Payment Modal */}
@@ -739,49 +736,49 @@ if(firstName && lastName && tittle && company &&  bio && !titleError && !company
           <View style={styles.secondtab1}>
             <Text style={styles.personname}>Payments</Text>
             <View>
-            <Pressable onPress={() => setSelectedValue('option1')}>
-            <View style={styles.paymenttab}>
-              <View style={styles.paymentMethod}>
-                <Image source={require('../assests/payment.png')} style={styles.paymentimage}/>
-              <Text style={styles.MPesa}>Mpesa</Text>
-              </View>
-              <View>
-              <RadioButton.Android
-                        value="option1"
-                        status={selectedValue === 'option1' ? 'checked' : 'unchecked'}
-                        onPress={() => setSelectedValue('option1')}
-                        color="#007BFF"
+              <Pressable onPress={() => setSelectedValue('option1')}>
+                <View style={styles.paymenttab}>
+                  <View style={styles.paymentMethod}>
+                    <Image source={require('../assests/payment.png')} style={styles.paymentimage} />
+                    <Text style={styles.MPesa}>Mpesa</Text>
+                  </View>
+                  <View>
+                    <RadioButton.Android
+                      value="option1"
+                      status={selectedValue === 'option1' ? 'checked' : 'unchecked'}
+                      onPress={() => setSelectedValue('option1')}
+                      color="#007BFF"
                     />
-              </View>
-            </View>
-            </Pressable>
+                  </View>
+                </View>
+              </Pressable>
             </View>
             <View>
-            <Pressable onPress={() => setSelectedValue('option2')}>
+              <Pressable onPress={() => setSelectedValue('option2')}>
 
-            <View style={styles.paymenttab1}>
-              <View style={styles.paymentMethod}>
-                <Image source={require('../assests/payment2.png')} style={styles.paymentimage}/>
-              <Text style={styles.MPesa}>Pesapal</Text>
-              </View>
-              <View>
-              <RadioButton.Android
-                        value="option2"
-                        status={selectedValue === 'option2' ? 'checked' : 'unchecked'}
-                        onPress={() => setSelectedValue('option2')}
-                        color="#007BFF"
+                <View style={styles.paymenttab1}>
+                  <View style={styles.paymentMethod}>
+                    <Image source={require('../assests/payment2.png')} style={styles.paymentimage} />
+                    <Text style={styles.MPesa}>Pesapal</Text>
+                  </View>
+                  <View>
+                    <RadioButton.Android
+                      value="option2"
+                      status={selectedValue === 'option2' ? 'checked' : 'unchecked'}
+                      onPress={() => setSelectedValue('option2')}
+                      color="#007BFF"
                     />
-              </View>
-            </View>
-            </Pressable>
+                  </View>
+                </View>
+              </Pressable>
             </View>
             <View style={styles.Button}>
-            <Pressable >
-              <Text style={styles.pressabletext}>Add Credit/Debit Card</Text>
-            </Pressable>
+              <Pressable >
+                <Text style={styles.pressabletext}>Add Credit/Debit Card</Text>
+              </Pressable>
             </View>
 
-             </View>
+          </View>
 
         </View>
 
@@ -804,34 +801,34 @@ if(firstName && lastName && tittle && company &&  bio && !titleError && !company
           <View style={styles.modelthick} />
           <View style={styles.secondtab}>
             <View style={styles.passwordtab}>
-              <Image source={require('../assests/password.png')}  style={styles.passwordimage}/>
+              <Image source={require('../assests/password.png')} style={styles.passwordimage} />
             </View>
-            <View  style={styles.passwordtab1}>
+            <View style={styles.passwordtab1}>
               <Text style={styles.password} >Hey, Trossard</Text>
               <Text style={styles.password1}>Fill in the details below</Text>
             </View>
             <Text style={styles.personname3}>Old Password</Text>
-            <TextInput placeholder="********" placeholderTextColor="#94A3B8"  style={styles.input}
-            value={oldPassword}
-            onChangeText={setOldPassword}
+            <TextInput placeholder="********" placeholderTextColor="#94A3B8" style={styles.input}
+              value={oldPassword}
+              onChangeText={setOldPassword}
             />
             <Text style={styles.personname3}>New Password</Text>
-            <TextInput placeholder="********" placeholderTextColor="#94A3B8"  style={styles.input}
-            value={newPassword}
-            onChangeText={handlePasswordChange}/>
+            <TextInput placeholder="********" placeholderTextColor="#94A3B8" style={styles.input}
+              value={newPassword}
+              onChangeText={handlePasswordChange} />
             {newPassworderror ? <Text style={styles.error}>{newPassworderror}</Text> : null}
             <Text style={styles.personname3}>Confirm New Password</Text>
-            <TextInput placeholder="********" placeholderTextColor="#94A3B8"  style={styles.input}
-            value={confirmPassword}
-            onChangeText={handleconfirmPasswordChange}/>
+            <TextInput placeholder="********" placeholderTextColor="#94A3B8" style={styles.input}
+              value={confirmPassword}
+              onChangeText={handleconfirmPasswordChange} />
             {confirmPassworderror ? <Text style={styles.error}>{confirmPassworderror}</Text> : null}
             <View style={styles.Button2}>
-            <Pressable  onPress={handleChangePassword}>
-              <Text style={styles.pressabletext}>Change Password</Text>
-            </Pressable>
+              <Pressable onPress={handleChangePassword}>
+                <Text style={styles.pressabletext}>Change Password</Text>
+              </Pressable>
             </View>
 
-             </View>
+          </View>
 
         </View>
 
@@ -847,169 +844,169 @@ if(firstName && lastName && tittle && company &&  bio && !titleError && !company
         visible={membershipModalVisible}
       >
         <ScrollView>
-        <View style={styles.container2}>
-          <View style={styles.firsttab}>
-            <Icon name="arrowleft" size={24} color="#64748B" onPress={handleMembershipClose} />
-            <Text style={styles.title}>Membership</Text>
-          </View>
-          <View style={styles.modelthick} />
-          <View style={styles.secondtab2}>
-            <Text style={styles.membership}>My Current Membership</Text>
-            <View style={styles.main}>
-              <View style={styles.imageprofess}>
-                <Image source={require('../assests/profess.png')} style={styles.profess}/>
-              </View>
-              <View>
-              <Text style={styles.membership1}>Professional Membership</Text>
-              <Text style={styles.validtill}>Valid till: 30th Dec 2024</Text>
-              </View>
+          <View style={styles.container2}>
+            <View style={styles.firsttab}>
+              <Icon name="arrowleft" size={24} color="#64748B" onPress={handleMembershipClose} />
+              <Text style={styles.title}>Membership</Text>
             </View>
+            <View style={styles.modelthick} />
+            <View style={styles.secondtab2}>
+              <Text style={styles.membership}>My Current Membership</Text>
+              <View style={styles.main}>
+                <View style={styles.imageprofess}>
+                  <Image source={require('../assests/profess.png')} style={styles.profess} />
+                </View>
+                <View>
+                  <Text style={styles.membership1}>Professional Membership</Text>
+                  <Text style={styles.validtill}>Valid till: 30th Dec 2024</Text>
+                </View>
+              </View>
 
-             </View>
-             <View styles={styles.othermembership}>
+            </View>
+            <View styles={styles.othermembership}>
               <Text style={styles.membership2}>Other memberships</Text>
-             </View>
-             <View style={styles.secondtab3}>
-             <FlatList
+            </View>
+            <View style={styles.secondtab3}>
+              <FlatList
                 data={membershipData}
                 renderItem={renderMembership}
                 keyExtractor={item => item.id}
-            />
-             </View>
+              />
+            </View>
 
-        </View>
+          </View>
         </ScrollView>
 
       </Modal>
 
-    {/* editname modal */}
-        {editnameVisible
+      {/* editname modal */}
+      {editnameVisible
         && (
-      <Modal
-        transparent={true}
-        animationType="slide"
-        onRequestClose={handlenameeditclose}
-        visible={editnameVisible}
-        style={styles.editmodal}
-      >
-        <View style={styles.editcontainer}>
-          <Text style={styles.edittext}>Edit Your Profile Details</Text>
+          <Modal
+            transparent={true}
+            animationType="slide"
+            onRequestClose={handlenameeditclose}
+            visible={editnameVisible}
+            style={styles.editmodal}
+          >
+            <View style={styles.editcontainer}>
+              <Text style={styles.edittext}>Edit Your Profile Details</Text>
 
-          <View>
-            <Text style={styles.editname}>First Name</Text>
-            <TextInput
-            value={firstName}
-            placeholder=" Enter Your First name"
-            placeholderTextColor="black"
-            style={styles.edittextinput}
-            onChangeText={handlefirstname}
-             />
-              {firstNameerror ? <Text style={styles.error}>{firstNameerror}</Text> : null}
-          </View>
-          <View>
-            <Text style={styles.editname}>Middle Name</Text>
-            <TextInput
-            value={middlename}
-            placeholder="Enter Your Middle name"
-            placeholderTextColor="black"
-            style={styles.edittextinput}
-            onChangeText={setMiddlename}
-             />
-          </View>
-          <View>
-            <Text style={styles.editname}>Last Name</Text>
-            <TextInput
-            value={lastName}
-            placeholder="Enter Your Last name"
-            placeholderTextColor="black"
-            style={styles.edittextinput}
-            onChangeText={handlelastname}
-             />
-              {lastNameerror ? <Text style={styles.error}>{lastNameerror}</Text> : null}
-          </View>
-          <View>
-            <Text style={styles.editname}>Title</Text>
-            <TextInput
-            value={tittle}
-            placeholder="Enter Your Title"
-            placeholderTextColor="black"
-            style={styles.edittextinput}
-            onChangeText={handleTitle}
-             />
-              {titleError ? <Text style={styles.error}>{titleError}</Text> : null}
-          </View>
-          <View>
-            <Text style={styles.editname}>Institution</Text>
-            <TextInput value={company}
-            placeholder="Enter Your Institution Name"
-            placeholderTextColor="black"
-            onChangeText={handleCompany}
-            style={styles.edittextinput}
-             />
-              {companyError ? <Text style={styles.error}>{titleError}</Text> : null}
-          </View>
+              <View>
+                <Text style={styles.editname}>First Name</Text>
+                <TextInput
+                  value={firstName}
+                  placeholder=" Enter Your First name"
+                  placeholderTextColor="black"
+                  style={styles.edittextinput}
+                  onChangeText={handlefirstname}
+                />
+                {firstNameerror ? <Text style={styles.error}>{firstNameerror}</Text> : null}
+              </View>
+              <View>
+                <Text style={styles.editname}>Middle Name</Text>
+                <TextInput
+                  value={middlename}
+                  placeholder="Enter Your Middle name"
+                  placeholderTextColor="black"
+                  style={styles.edittextinput}
+                  onChangeText={setMiddlename}
+                />
+              </View>
+              <View>
+                <Text style={styles.editname}>Last Name</Text>
+                <TextInput
+                  value={lastName}
+                  placeholder="Enter Your Last name"
+                  placeholderTextColor="black"
+                  style={styles.edittextinput}
+                  onChangeText={handlelastname}
+                />
+                {lastNameerror ? <Text style={styles.error}>{lastNameerror}</Text> : null}
+              </View>
+              <View>
+                <Text style={styles.editname}>Title</Text>
+                <TextInput
+                  value={tittle}
+                  placeholder="Enter Your Title"
+                  placeholderTextColor="black"
+                  style={styles.edittextinput}
+                  onChangeText={handleTitle}
+                />
+                {titleError ? <Text style={styles.error}>{titleError}</Text> : null}
+              </View>
+              <View>
+                <Text style={styles.editname}>Institution</Text>
+                <TextInput value={company}
+                  placeholder="Enter Your Institution Name"
+                  placeholderTextColor="black"
+                  onChangeText={handleCompany}
+                  style={styles.edittextinput}
+                />
+                {companyError ? <Text style={styles.error}>{titleError}</Text> : null}
+              </View>
 
-          <View style={styles.editbutton1}>
-            <Pressable onPress={handlenameeditclose}>
-              <Text style={styles.editbutton}>Cancel</Text>
-            </Pressable>
-            <Pressable >
-              <Text style={styles.editbutton} onPress={handleSaveUserDetails}>Save</Text>
-            </Pressable>
-          </View>
+              <View style={styles.editbutton1}>
+                <Pressable onPress={handlenameeditclose}>
+                  <Text style={styles.editbutton}>Cancel</Text>
+                </Pressable>
+                <Pressable >
+                  <Text style={styles.editbutton} onPress={handleSaveUserDetails}>Save</Text>
+                </Pressable>
+              </View>
 
-        </View>
+            </View>
 
 
 
-      </Modal>
+          </Modal>
         )}
 
 
 
-         {/* edit bio modal */}
-         {bioModal1Visible
+      {/* edit bio modal */}
+      {bioModal1Visible
         && (
-      <Modal
-        transparent={true}
-        animationType="slide"
-        onRequestClose={handlebiomodalclose}
-        visible={bioModal1Visible}
-        style={styles.editmodal}
-      >
-        <View style={styles.editcontainer}>
-          <Text style={styles.edittext}>Edit Your Bio</Text>
-          {bioError ? <Text style={styles.error1}>{bioError}</Text> : null}
+          <Modal
+            transparent={true}
+            animationType="slide"
+            onRequestClose={handlebiomodalclose}
+            visible={bioModal1Visible}
+            style={styles.editmodal}
+          >
+            <View style={styles.editcontainer}>
+              <Text style={styles.edittext}>Edit Your Bio</Text>
+              {bioError ? <Text style={styles.error1}>{bioError}</Text> : null}
 
-          <View style={styles.bioview}>
-          <TextInput
-        style={[styles.editbiotextinput, { height: height > maxHeight ? maxHeight : height }]}
-        value={bio}
-        onChangeText={handleBio}
-        multiline={true}
-        numberOfLines={4}
-        placeholder="Enter your Bio here..."
-        placeholderTextColor="black"
-        onContentSizeChange={handleContentSizeChange}
-      />
-      {height > maxHeight && (
-        <Text style={styles.warningText}>You have exceeded the maximum allowed lines!</Text>
-      )}
-          </View>
-          <View style={styles.editbutton1}>
-            <Pressable onPress={handlebiomodalclose}>
-              <Text style={styles.editbutton}>Cancel</Text>
-            </Pressable>
-            <Pressable >
-              <Text style={styles.editbutton} onPress={handleSaveUserDetails}>Save</Text>
-            </Pressable>
-          </View>
+              <View style={styles.bioview}>
+                <TextInput
+                  style={[styles.editbiotextinput, { height: height > maxHeight ? maxHeight : height }]}
+                  value={bio}
+                  onChangeText={handleBio}
+                  multiline={true}
+                  numberOfLines={4}
+                  placeholder="Enter your Bio here..."
+                  placeholderTextColor="black"
+                  onContentSizeChange={handleContentSizeChange}
+                />
+                {height > maxHeight && (
+                  <Text style={styles.warningText}>You have exceeded the maximum allowed lines!</Text>
+                )}
+              </View>
+              <View style={styles.editbutton1}>
+                <Pressable onPress={handlebiomodalclose}>
+                  <Text style={styles.editbutton}>Cancel</Text>
+                </Pressable>
+                <Pressable >
+                  <Text style={styles.editbutton} onPress={handleSaveUserDetails}>Save</Text>
+                </Pressable>
+              </View>
 
-        </View>
+            </View>
 
 
 
-      </Modal>
+          </Modal>
         )}
 
 
@@ -1019,82 +1016,82 @@ if(firstName && lastName && tittle && company &&  bio && !titleError && !company
       <View>
         {selectMembership && (
 
-      <Modal
-        transparent={true}
-        animationType="slide"
-        onRequestClose={handlememberclose}
-        visible={memberModal1Visible}
-      >
+          <Modal
+            transparent={true}
+            animationType="slide"
+            onRequestClose={handlememberclose}
+            visible={memberModal1Visible}
+          >
 
-        <View style={styles.container3}>
-          <View style={styles.firsttab}>
-            <Icon name="arrowleft" size={24} color="#64748B" onPress={handlememberclose} />
-            <Text style={styles.title}>{selectMembership.type}</Text>
-          </View>
-          <View style={styles.modelthick} />
-          <ScrollView>
-          <View style={styles.student}>
-          <View style={styles.imagecontainer}>
-        <Image source={selectMembership.flag} style={styles.image2} />
-        </View>
-        <Text style={styles.head1}>{selectMembership.type}</Text>
-        <Text style={styles.des}>{selectMembership.description}</Text>
-        <View style={styles.student2}>
-            <Text style={styles.ammount}>{selectMembership.price}</Text>
-            <Text style={styles.month}>/Month</Text>
-        </View>
-        <View style={styles.line3}/>
+            <View style={styles.container3}>
+              <View style={styles.firsttab}>
+                <Icon name="arrowleft" size={24} color="#64748B" onPress={handlememberclose} />
+                <Text style={styles.title}>{selectMembership.type}</Text>
+              </View>
+              <View style={styles.modelthick} />
+              <ScrollView>
+                <View style={styles.student}>
+                  <View style={styles.imagecontainer}>
+                    <Image source={selectMembership.flag} style={styles.image2} />
+                  </View>
+                  <Text style={styles.head1}>{selectMembership.type}</Text>
+                  <Text style={styles.des}>{selectMembership.description}</Text>
+                  <View style={styles.student2}>
+                    <Text style={styles.ammount}>{selectMembership.price}</Text>
+                    <Text style={styles.month}>/Month</Text>
+                  </View>
+                  <View style={styles.line3} />
 
-        <View style={styles.done}>
-          <Icon1  name="done" size={24} color="#64748B"/>
-          <Text style={styles.doneText}>Lorem ipsum dolor sit amet consecteturSapien non risus lacus elit</Text>
-        </View>
+                  <View style={styles.done}>
+                    <Icon1 name="done" size={24} color="#64748B" />
+                    <Text style={styles.doneText}>Lorem ipsum dolor sit amet consecteturSapien non risus lacus elit</Text>
+                  </View>
 
-        <View style={styles.done}>
-          <Icon1  name="done" size={24} color="#64748B"/>
-          <Text style={styles.doneText}>Lorem ipsum dolor sit amet consecteturSapien non risus lacus elit</Text>
-        </View>
+                  <View style={styles.done}>
+                    <Icon1 name="done" size={24} color="#64748B" />
+                    <Text style={styles.doneText}>Lorem ipsum dolor sit amet consecteturSapien non risus lacus elit</Text>
+                  </View>
 
-        <View style={styles.done}>
-          <Icon1  name="done" size={24} color="#64748B"/>
-          <Text style={styles.doneText}>Lorem ipsum dolor sit amet consecteturSapien non risus lacus elit</Text>
-        </View>
+                  <View style={styles.done}>
+                    <Icon1 name="done" size={24} color="#64748B" />
+                    <Text style={styles.doneText}>Lorem ipsum dolor sit amet consecteturSapien non risus lacus elit</Text>
+                  </View>
 
-        <View style={styles.done}>
-          <Icon1  name="done" size={24} color="#64748B"/>
-          <Text style={styles.doneText}>Lorem ipsum dolor sit amet consecteturSapien non risus lacus elit</Text>
-        </View>
+                  <View style={styles.done}>
+                    <Icon1 name="done" size={24} color="#64748B" />
+                    <Text style={styles.doneText}>Lorem ipsum dolor sit amet consecteturSapien non risus lacus elit</Text>
+                  </View>
 
-        <View style={styles.done}>
-          <Icon1  name="done" size={24} color="#64748B"/>
-          <Text style={styles.doneText}>Lorem ipsum dolor sit amet consecteturSapien non risus lacus elit</Text>
-        </View>
+                  <View style={styles.done}>
+                    <Icon1 name="done" size={24} color="#64748B" />
+                    <Text style={styles.doneText}>Lorem ipsum dolor sit amet consecteturSapien non risus lacus elit</Text>
+                  </View>
 
-        <View style={styles.done}>
-          <Icon1  name="done" size={24} color="#64748B"/>
-          <Text style={styles.doneText}>Lorem ipsum dolor sit amet consecteturSapien non risus lacus elit</Text>
-        </View>
+                  <View style={styles.done}>
+                    <Icon1 name="done" size={24} color="#64748B" />
+                    <Text style={styles.doneText}>Lorem ipsum dolor sit amet consecteturSapien non risus lacus elit</Text>
+                  </View>
 
-        <View style={styles.done}>
-          <Icon1  name="done" size={24} color="#64748B"/>
-          <Text style={styles.doneText}>Lorem ipsum dolor sit amet consecteturSapien non risus lacus elit</Text>
-        </View>
+                  <View style={styles.done}>
+                    <Icon1 name="done" size={24} color="#64748B" />
+                    <Text style={styles.doneText}>Lorem ipsum dolor sit amet consecteturSapien non risus lacus elit</Text>
+                  </View>
 
-        <View style={styles.done}>
-          <Icon1  name="done" size={24} color="#64748B"/>
-          <Text style={styles.doneText}>Lorem ipsum dolor sit amet consecteturSapien non risus lacus elit</Text>
-        </View>
-        <Pressable onPress={''} style={styles.button2}>
-                <Text style={styles.buttontext}>Upgrade</Text>
+                  <View style={styles.done}>
+                    <Icon1 name="done" size={24} color="#64748B" />
+                    <Text style={styles.doneText}>Lorem ipsum dolor sit amet consecteturSapien non risus lacus elit</Text>
+                  </View>
+                  <Pressable onPress={''} style={styles.button2}>
+                    <Text style={styles.buttontext}>Upgrade</Text>
 
-        </Pressable>
+                  </Pressable>
 
-        </View>
-        </ScrollView>
-          </View>
+                </View>
+              </ScrollView>
+            </View>
 
-      </Modal>
-      )}
+          </Modal>
+        )}
       </View>
 
 
@@ -1299,7 +1296,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   secondtab: {
-    margin:24,
+    margin: 24,
   },
   terms: {
     color: '#64748B',
@@ -1497,7 +1494,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 5,
     marginTop: 10,
-  },container2: {
+  }, container2: {
     flex: 1,
     backgroundColor: '#E2E8F0',
   },
@@ -1542,7 +1539,7 @@ const styles = StyleSheet.create({
   passwordimage: {
     height: height * 0.1,  // 10% of screen height
     width: width * 0.2,  // 20% of screen width
-    resizeMode:'center',
+    resizeMode: 'center',
   },
   passwordtab1: {
     justifyContent: 'center',
@@ -1601,7 +1598,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderColor: '#0966C3',
     marginTop: 20,
-    justifyContent:'space-evenly',
+    justifyContent: 'space-evenly',
   },
   membership2: {
     fontFamily: 'inter',
