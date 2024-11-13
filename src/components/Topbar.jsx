@@ -411,16 +411,23 @@ if(firstName && lastName && tittle && company &&  bio && !titleError && !company
   // log out user
   const handleLogout = async () => {
     try {
-      // Close modal before navigation
-      setModalVisible(false);  // Ensure modal is closed
+      // Close the modal before navigating (if any)
+      setModalVisible(false);
 
-      // await firebase.auth().signOut(); // Sign out the user
-      // Alert.alert('Logged Out', 'You have successfully logged out.');
-      console.log('Logged Out', 'You have successfully logged out.');
-      // Navigate to Login screen
-      navigation.navigate('DetailsScreen');
-      console.log('anything');
+      // Sign out the user using Firebase Authentication
+      await firebase.auth().signOut();
+
+      // Update the user context to reflect the logged-out state (optional but recommended)
+      // You can set the user state to null here if you're using a local context provider to manage user state.
+      // This will ensure that other components react to the change (e.g., navigation, UI updates)
+
+      // If you're using the `useUser` hook, the user will automatically update when the Firebase `onAuthStateChanged` listener triggers
+      // Navigate to the Login screen after successful logout
+      navigation.replace('Login');
+      Alert.alert('Logged Out', 'You have successfully logged out.');
+
     } catch (error) {
+      // Handle any errors that occur during the logout process
       Alert.alert('Logout Error', error.message);
     }
   };

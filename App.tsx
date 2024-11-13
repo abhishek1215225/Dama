@@ -28,7 +28,6 @@ import About from './src/screens/About';
 import MyTabs from './src/navigations/Bottombar';
 import Reservation from './src/components/Resevration';
 import Message from './src/screens/Message';
-import { ThemeProvider } from './src/components/ThemeContext';
 import Search from './src/components/search';
 import Forgot from './src/screens/ForgetScreen';
 import Emailotp from './src/screens/Emailotp';
@@ -39,6 +38,7 @@ import First from './src/screens/first';
 import messaging from '@react-native-firebase/messaging';
 import { PermissionsAndroid } from 'react-native';
 import Chat from './src/screens/chat';
+import { useUser } from './src/components/context';
 
 
 //const Tab = createMaterialBottomTabNavigator();
@@ -65,22 +65,23 @@ import Chat from './src/screens/chat';
 
 
 const App = () => {
+  const { user } = useUser();
 
   const requestNotificationPermission = async () => {
     const granted = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
       {
-        title: "Notification Permission",
-        message: "This app needs access to notifications to receive updates.",
-        buttonNeutral: "Ask Me Later",
-        buttonNegative: "Cancel",
-        buttonPositive: "OK",
+        title: 'Notification Permission',
+        message: 'This app needs access to notifications to receive updates.',
+        buttonNeutral: 'Ask Me Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
       }
     );
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-      console.log("Notification permission granted");
+      console.log('Notification permission granted');
     } else {
-      console.log("Notification permission denied");
+      console.log('Notification permission denied');
     }
   };
 
@@ -119,40 +120,51 @@ const App = () => {
 
   },[]);
 
-  return ( <ThemeProvider>
+  return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Singin">
-        <Stack.Screen name="Singin" component={Singin} options={{headerShown:false}}/>
-        <Stack.Screen name="First" component={First} options={{headerShown:false}}/>
-        <Stack.Screen name="Chat" component={Chat} options={{headerShown:false}}/>
-        <Stack.Screen name="HomeStack" options={{ headerShown: false }}>
+      {user ? (
+        <>
+         <Stack.Screen name="HomeStack" options={{ headerShown: false }}>
           {() => (
             <MyTabs />
             )}
         </Stack.Screen>
-        <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
+        <Stack.Screen name="First" component={First} options={{headerShown:false}}/>
+        <Stack.Screen name="Chat" component={Chat} options={{headerShown:false}}/>
         <Stack.Screen name="Event" component={Event} options={{headerShown:false}}/>
+        <Stack.Screen name="Topbar" component={Topbar} options={{headerShown:false}}  />
+        <Stack.Screen name="DetailsScreen" component={DetailsScreen} options={{headerShown:false}} />
+        <Stack.Screen name="About" component={About} options={{headerShown:false}} />
+        <Stack.Screen name="Reservation" component={Reservation} options={{headerShown:false}}/>
+        <Stack.Screen name="Message" component={Message} options={{headerShown:false}}/>
+        <Stack.Screen name="Search" component={Search} options={{headerShown:false}}/>
+        <Stack.Screen name="ResetPassword" component={ResetPassword} options={{headerShown:false}}/>
+        </>
+      ) : (
+        <>
+        <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
+        <Stack.Screen name="Singin" component={Singin} options={{headerShown:false}}/>
         <Stack.Screen name="SingUp" component={SingUp} options={{headerShown:false}} />
         <Stack.Screen name="Otp" component={Otp} options={{headerShown:false}}  />
         <Stack.Screen name="Professional" component={ProfessionalDetail} options={{headerShown:false}}  />
         <Stack.Screen name="Personal" component={PersonalDetais} options={{headerShown:false}}  />
         <Stack.Screen name="Welcome" component={Welcome} options={{headerShown:false}}  />
         <Stack.Screen name="Confirmpayment" component={Confirmpayment} options={{headerShown:false}}  />
-        <Stack.Screen name="Topbar" component={Topbar} options={{headerShown:false}}  />
-        <Stack.Screen name="DetailsScreen" component={DetailsScreen} options={{headerShown:false}} />
         <Stack.Screen name="Terms" component={Terms} options={{headerShown:false}}/>
         <Stack.Screen name="Privacy" component={Privacy} options={{headerShown:false}}/>
-        <Stack.Screen name="About" component={About} options={{headerShown:false}} />
-        <Stack.Screen name="Reservation" component={Reservation} options={{headerShown:false}}/>
-        <Stack.Screen name="Message" component={Message} options={{headerShown:false}}/>
-        <Stack.Screen name="Search" component={Search} options={{headerShown:false}}/>
         <Stack.Screen name="Forgot" component={Forgot} options={{headerShown:false}}/>
         <Stack.Screen name="Emailotp" component={Emailotp} options={{headerShown:false}}/>
-        <Stack.Screen name="ResetPassword" component={ResetPassword} options={{headerShown:false}}/>
+
+
+</>
+
+
+     )}
+
           </Stack.Navigator>
 
     </NavigationContainer>
-    </ThemeProvider>
   );
 };
 
