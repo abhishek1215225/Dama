@@ -10,10 +10,7 @@ import Icon2 from 'react-native-vector-icons/Entypo';
 import { firebase } from '../firebaseConfig';
 const { width, height } = Dimensions.get('window');
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
-<<<<<<< HEAD
 import { useNavigation ,CommonActions} from '@react-navigation/native';
-=======
->>>>>>> 470ec70f63ae50c9aede9b73d7ab3a0ea8af60df
 const membershipData = [
   {
     id: 1,
@@ -42,12 +39,8 @@ const membershipData = [
 
 
 
-<<<<<<< HEAD
 const Topbar = () => {
   const navigation = useNavigation();
-=======
-const Topbar = ({navigation}) => {
->>>>>>> 470ec70f63ae50c9aede9b73d7ab3a0ea8af60df
   const [selectedValue, setSelectedValue] = useState('option1');
   const [modalVisible, setModalVisible] = useState(false);
   const [profileModalVisible, setProfileModalVisible] = useState(false);
@@ -421,23 +414,15 @@ const Topbar = ({navigation}) => {
       setModalVisible(false);  // Ensure modal is closed
 
       // await firebase.auth().signOut(); // Sign out the user
-<<<<<<< HEAD
      console.log('Logging out...');
 await firebase.auth().signOut();
 console.log('Navigating to Login screen...');
-navigation.dispatch(
-  CommonActions.reset({
-    index: 0,
-    routes: [{ name: 'Login' }], // assuming 'Login' is your login screen
-  })
-);
-=======
-      // Alert.alert('Logged Out', 'You have successfully logged out.');
-      console.log('Logged Out', 'You have successfully logged out.');
-      // Navigate to Login screen
-      navigation.navigate('Login');
-      console.log('anything');
->>>>>>> 470ec70f63ae50c9aede9b73d7ab3a0ea8af60df
+// navigation.dispatch(
+//   CommonActions.reset({
+//     index: 0,
+//     routes: [{ name: 'Login' }], // assuming 'Login' is your login screen
+//   })
+// );
     } catch (error) {
       Alert.alert('Logout Error', error.message);
     }

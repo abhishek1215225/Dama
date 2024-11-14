@@ -1,7 +1,7 @@
 
-import React, { useState, useEffect } from 'react';
-import { View, Image, StyleSheet, Text, TextInput, Pressable, Alert, Dimensions } from 'react-native';
-import { firebase } from '../firebaseConfig';
+import React,{useState, useEffect } from 'react';
+import {View,Image,StyleSheet,Text,TextInput,Pressable ,Alert,Dimensions} from 'react-native';
+import { firebase}  from '../firebaseConfig';
 import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 import { moderateScale } from 'react-native-size-matters';
 
@@ -9,20 +9,18 @@ import { moderateScale } from 'react-native-size-matters';
 
 
 
-const Login = ({ navigation }) => {
+const Login = ({ navigation }) =>{
     const [email, setEmail] = useState('');
     const { width, height } = Dimensions.get('window');
 
 
     const [password, setPassword] = useState('');
-    useEffect(() => {});
 
-    const handleSubmit = () => {
+    const handleSubmit =  () => {
 
 
-        firebase.auth().signInWithEmailAndPassword(email, password)
+      firebase.auth().signInWithEmailAndPassword( email, password)
 
-<<<<<<< HEAD
         .then((userCredential) => {
             const { uid } = userCredential.user;
             console.log('user id : ', uid);
@@ -39,82 +37,64 @@ const Login = ({ navigation }) => {
             Alert.alert('Authentication Error', error.message);
           }
         });
-=======
-            .then((userCredential) => {
-                const { uid } = userCredential.user;
-                console.log('user id : ', uid);
-                navigation.navigate('HomeStack', { uid });
-            })
-            .catch(error => {
-                if (error.code === 'auth/invalid-email') {
-                    Alert.alert('Invalid Email', 'Invalid Email');
-                } else if (error.code === 'auth/user-not-found') {
-                    Alert.alert('User Not Found', 'User Not Found.');
-                } else if (error.code === 'auth/wrong-password') {
-                    Alert.alert('Incorrect Password', 'The password is incorrect.');
-                } else {
-                    Alert.alert('Authentication Error', error.message);
-                }
-            });
->>>>>>> 470ec70f63ae50c9aede9b73d7ab3a0ea8af60df
 
 
-    };
+      };
 
 
-    return (<View style={styles.container}>
+    return(<View style={styles.container}>
         <View>
 
-            <Image source={require('../assests/logo/logo.png')} style={styles.image} />
-        </View>
-        <View style={styles.Header}>
-            <Text style={styles.Text1}>Sign in</Text>
-            <Text style={styles.Text}>Stay updated in your professional world</Text>
-        </View>
-        <View style={styles.Input}>
-            <Text style={styles.email}>Email</Text>
-            <TextInput style={styles.TextInput} placeholder="Example@gmail.com"
-                placeholderTextColor="#94A3B8"
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none" />
-            <Text style={styles.email}>Password</Text>
-            <TextInput style={styles.TextInput} placeholder="*******" placeholderTextColor="#94A3B8"
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-            />
-            <Pressable onPress={() => navigation.navigate('Forgot')}>
-                <Text style={styles.forget}>Forgot Password ?</Text>
-            </Pressable>
+    <Image source={require('../assests/logo/logo.png')} style={styles.image}/>
+    </View>
+       <View style={styles.Header}>
+        <Text style={styles.Text1}>Sign in</Text>
+        <Text style={styles.Text}>Stay updated in your professional world</Text>
+       </View>
+       <View style={styles.Input}>
+        <Text style={styles.email}>Email</Text>
+        <TextInput style={styles.TextInput} placeholder="Example@gmail.com"
+        placeholderTextColor="#94A3B8"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"/>
+        <Text style={styles.email}>Password</Text>
+        <TextInput style={styles.TextInput} placeholder="*******" placeholderTextColor="#94A3B8"
+         value={password}
+         onChangeText={setPassword}
+         secureTextEntry
+         />
+        <Pressable onPress={() => navigation.navigate('Forgot')}>
+        <Text style={styles.forget}>Forgot Password ?</Text>
+        </Pressable>
         </View>
         <View>
-            <Pressable onPress={() =>handleSubmit()}>
-                <View style={styles.button} >
-                    <Text style={styles.buttontext}>Login</Text>
+            <Pressable onPress={handleSubmit}>
+                <View  style={styles.button} >
+                <Text style={styles.buttontext}>Login</Text>
                 </View>
-            </Pressable>
-            <Pressable onPress={''}>
-                <View style={styles.Linkedin} >
-                    <Image source={require('../assests/logo/linkdin.png')} style={styles.logo} />
-                    <Text style={styles.Linkedintext}>Sign in with LinkedIn</Text>
-                </View>
-            </Pressable>
-            <Pressable onPress={''}>
-                <View style={styles.Linkedin} >
-                    <Image source={require('../assests/logo/Fingerprint.png')} style={styles.logo} />
-                    <Text style={styles.Linkedintext}>Sign in with Touch ID</Text>
-                </View>
-            </Pressable >
-            <View style={styles.Resend}>
-                <Text style={styles.text}>Don't have an account ? </Text>
-                <Pressable onPress={() => navigation.navigate('SingUp')}>
-                    <Text style={styles.resendTExt}> Register</Text>
                 </Pressable>
-            </View>
+                <Pressable onPress={''}>
+                <View  style={styles.Linkedin} >
+                <Image source={require('../assests/logo/linkdin.png')}  style={styles.logo}/>
+                <Text style={styles.Linkedintext}>Sign in with LinkedIn</Text>
+                </View>
+                </Pressable>
+                <Pressable onPress={''}>
+                <View  style={styles.Linkedin} >
+                <Image source={require('../assests/logo/Fingerprint.png')}  style={styles.logo}/>
+                <Text style={styles.Linkedintext}>Sign in with Touch ID</Text>
+                </View>
+                </Pressable >
+                <View style={styles.Resend}>
+                    <Text style={styles.text}>Don't have an account ? </Text>
+                    <Pressable onPress={()=> navigation.navigate('SingUp')}>
+                        <Text style={styles.resendTExt}> Register</Text>
+                    </Pressable>
+                </View>
         </View>
-    </View>);
+       </View>);
 };
 export default Login;
 const styles = StyleSheet.create(
@@ -248,7 +228,7 @@ const styles = StyleSheet.create(
             color: 'red',
             marginLeft: wp('6%'),
         },
-        resendTExt: {
+        resendTExt:{
             color: 'blue',
             textDecorationLine: 'underline',
             fontSize: moderateScale(14),

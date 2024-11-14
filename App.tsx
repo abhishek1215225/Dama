@@ -25,7 +25,7 @@ import Event from './src/screens/Events';
 import Terms from './src/screens/Terms';
 import Privacy from './src/screens/privacy';
 import About from './src/screens/About';
-import MyTabs from './src/navigations/Bottombar';
+// import MyTabs from './src/navigations/Bottombar';
 import Reservation from './src/components/Resevration';
 import Message from './src/screens/Message';
 import Search from './src/components/search';
@@ -185,15 +185,6 @@ const App = () => {
         <Stack.Screen name="Home" component={HomeScreen} options={{headerShown:false}}/>
         <Stack.Screen name="First" component={First} options={{headerShown:false}}/>
         <Stack.Screen name="Chat" component={Chat} options={{headerShown:false}}/>
-<<<<<<< HEAD
-=======
-        <Stack.Screen name="HomeStack" options={{ headerShown: false }}>
-          {() => (
-            <MyTabs />
-            )}
-        </Stack.Screen>
-      
->>>>>>> 470ec70f63ae50c9aede9b73d7ab3a0ea8af60df
         <Stack.Screen name="Event" component={Event} options={{headerShown:false}}/>
         <Stack.Screen name="Topbar" component={Topbar} options={{headerShown:false}}  />
         <Stack.Screen name="DetailsScreen" component={DetailsScreen} options={{headerShown:false}} />
@@ -217,7 +208,6 @@ const App = () => {
         <Stack.Screen name="Privacy" component={Privacy} options={{headerShown:false}}/>
         <Stack.Screen name="Forgot" component={Forgot} options={{headerShown:false}}/>
         <Stack.Screen name="Emailotp" component={Emailotp} options={{headerShown:false}}/>
-<<<<<<< HEAD
 
 
 </>
@@ -225,10 +215,6 @@ const App = () => {
 
      )}
 
-=======
-        <Stack.Screen name="ResetPassword" component={ResetPassword} options={{headerShown:false}}/>
-        <Stack.Screen name="Login" component={Login} options={{headerShown:false}}/>
->>>>>>> 470ec70f63ae50c9aede9b73d7ab3a0ea8af60df
           </Stack.Navigator>
 
     </NavigationContainer>

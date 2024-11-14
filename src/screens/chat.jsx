@@ -124,6 +124,28 @@ const ChatScreen = ({ route, navigation }) => {
     }
   }, [messages]);
 
+  useEffect(() => {
+    if (user && userUid) {
+      const chatId = [user.uid, userUid].sort().join('_');
+  
+      const messagesRef = firebase.firestore().collection('chats')
+        .doc(chatId)
+        .collection('messages')
+        .orderBy('timestamp', 'asc');
+  
+      const unsubscribe = messagesRef.onSnapshot(snapshot => {
+        const messagesData = snapshot.docs.map(doc => ({
+          id: doc.id, // Include Firestore document ID
+          ...doc.data(),
+        }));
+        setMessages(messagesData);
+      });
+  
+      return unsubscribe;
+    }
+  }, [user, userUid]);
+  
+
   const [selectedImage, setSelectedImage] = React.useState(null);
 
 
@@ -170,7 +192,7 @@ const ChatScreen = ({ route, navigation }) => {
       }
     });
   };
-  
+
   // Open Gallery
   const openGallery = () => {
     const options = {
@@ -196,6 +218,46 @@ const ChatScreen = ({ route, navigation }) => {
   };
 
 
+  const handleLongPress = (messageId) => {
+    Alert.alert(
+      "Delete Message",
+      "Are you sure you want to delete this message?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel", // Just close the alert without doing anything
+        },
+        {
+          text: "Delete",
+          style: "destructive", // Mark the delete action as destructive (red color)
+          onPress: () => handleDeleteMessage(messageId), // Call handleDeleteMessage to delete the message
+        },
+      ]
+    );
+  };
+
+  const handleDeleteMessage = async (messageId) => {
+    if (messageId) {
+      try {
+        const chatId = [user.uid, userUid].sort().join('_');
+  
+        // Delete the message from Firestore
+        await firebase.firestore().collection('chats')
+          .doc(chatId) // Get the specific chat
+          .collection('messages') // Access the messages subcollection
+          .doc(messageId) // Use the message ID for deletion
+          .delete();
+  
+        // Optionally, remove the message from the local state to update the UI immediately
+        setMessages((prevMessages) => prevMessages.filter(message => message.id !== messageId));
+      } catch (error) {
+        console.error("Error deleting message:", error);
+      }
+    }
+  };
+  
+
+
   return (
     <View style={styles.container}>
       <View style={styles.chatContainer}>
@@ -205,23 +267,27 @@ const ChatScreen = ({ route, navigation }) => {
 
       {/* Display chat messages */}
       <FlatList
-        ref={flatListRef} // Assign the ref to the FlatList
-        data={messages}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item }) => {
-          // Check if the message is from the current user or the receiver
-          const isSender = item.senderId === user?.uid; // Check if the senderId matches the current user
+  ref={flatListRef} // Assign the ref to the FlatList
+  data={messages}
+  keyExtractor={(item, index) => index.toString()}
+  renderItem={({ item }) => {
+    const isSender = item.senderId === user?.uid; // Check if the senderId matches the current user
 
-          return (
-            <View style={[styles.messageContainer, isSender ? styles.sender : styles.receiver]}>
-              <Text style={[styles.messageText, isSender ? styles.senderText : styles.receiverText]}>{item.text}</Text>
-              <Text style={[styles.timestamp, isSender ? styles.senderText : styles.receiverText]}>
-                {item.timestamp ? new Date(item.timestamp.seconds * 1000).toLocaleString() : ''}
-              </Text>
-            </View>
-          );
-        }}
-      />
+    return (
+      <TouchableOpacity 
+        onLongPress={() => handleLongPress(item.id)} // Pass the message ID to delete
+        style={[styles.messageContainer, isSender ? styles.sender : styles.receiver]}>
+        <Text style={[styles.messageText, isSender ? styles.senderText : styles.receiverText]}>
+          {item.text}
+        </Text>
+        <Text style={[styles.timestamp, isSender ? styles.senderText : styles.receiverText]}>
+          {item.timestamp ? new Date(item.timestamp.seconds * 1000).toLocaleString() : ''}
+        </Text>
+      </TouchableOpacity>
+    );
+  }}
+/>
+
 
 {selectedImage && (
         <View style={styles.imageContainer}>
