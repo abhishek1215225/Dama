@@ -1,6 +1,8 @@
 import firebase from '@react-native-firebase/app';
 import '@react-native-firebase/auth';  // For Auth module
 import '@react-native-firebase/firestore';
+import  '@react-native-firebase/storage';
+
 
 
 const firebaseConfig = {

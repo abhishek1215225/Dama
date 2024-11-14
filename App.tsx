@@ -36,9 +36,10 @@ import './src/firebaseConfig';
 const Stack = createNativeStackNavigator();
 import First from './src/screens/first';
 import messaging from '@react-native-firebase/messaging';
-import { PermissionsAndroid } from 'react-native';
 import Chat from './src/screens/chat';
 import { useUser } from './src/components/context';
+import HomeScreen from './src/screens/HomeScreen';
+import { PermissionsAndroid, Platform } from 'react-native';
 
 
 //const Tab = createMaterialBottomTabNavigator();
@@ -67,6 +68,31 @@ import { useUser } from './src/components/context';
 const App = () => {
   const { user } = useUser();
 
+  const requestStoragePermission = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          {
+            title: 'Storage Permission',
+            message: 'This app needs access to your storage to save photos.',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          }
+        );
+  
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          console.log('Storage permission granted');
+        } else {
+          console.log('Storage permission denied');
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    }
+  };
+
   const requestNotificationPermission = async () => {
     const granted = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
@@ -82,6 +108,31 @@ const App = () => {
       console.log('Notification permission granted');
     } else {
       console.log('Notification permission denied');
+    }
+  };
+
+  const requestCameraPermission = async () => {
+    if (Platform.OS === 'android') {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.CAMERA,
+          {
+            title: 'Camera Permission',
+            message: 'This app needs access to your camera to take pictures.',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          }
+        );
+  
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          console.log('Camera permission granted');
+        } else {
+          console.log('Camera permission denied');
+        }
+      } catch (err) {
+        console.warn(err);
+      }
     }
   };
 
@@ -113,23 +164,25 @@ const App = () => {
     }
   };
 
+  
+
   useEffect(()=>{
     requestUserPermission();
     getToken();
     requestNotificationPermission();
+    requestCameraPermission();
+    requestStoragePermission();
 
   },[]);
+  
 
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Singin">
       {user ? (
         <>
-         <Stack.Screen name="HomeStack" options={{ headerShown: false }}>
-          {() => (
-            <MyTabs />
-            )}
-        </Stack.Screen>
+         {/* <Stack.Screen name="MyTab" component={MyTabs} options={{headerShown:false}}/>  */}
+        <Stack.Screen name="Home" component={HomeScreen} options={{headerShown:false}}/>
         <Stack.Screen name="First" component={First} options={{headerShown:false}}/>
         <Stack.Screen name="Chat" component={Chat} options={{headerShown:false}}/>
         <Stack.Screen name="Event" component={Event} options={{headerShown:false}}/>

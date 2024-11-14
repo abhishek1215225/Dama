@@ -24,7 +24,7 @@ const Login = ({ navigation }) =>{
         .then((userCredential) => {
             const { uid } = userCredential.user;
             console.log('user id : ', uid);
-        navigation.navigate('HomeStack',{uid});
+        navigation.navigate('Home',{uid});
         })
         .catch(error => {
           if (error.code === 'auth/invalid-email') {

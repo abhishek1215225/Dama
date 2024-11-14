@@ -5,6 +5,7 @@ import Topbar from '../components/Topbar';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon1 from 'react-native-vector-icons/Entypo';
 import Icon2 from 'react-native-vector-icons/AntDesign';
+import MyTabs from '../navigations/Bottombar';
 const { width, height } = Dimensions.get('window');
 
 
@@ -184,6 +185,7 @@ const HomeScreen = ({ navigation }) => {
           </View>
           </ScrollView>
       </Modal>
+        {/* <MyTabs/> */}
 
 
     </SafeAreaView>

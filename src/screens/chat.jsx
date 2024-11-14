@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet, Dimensions, ActivityIndicator } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, FlatList,Alert, StyleSheet,Image, Dimensions, ActivityIndicator } from 'react-native';
 import { firebase } from '../firebaseConfig';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { launchImageLibrary , launchCamera} from 'react-native-image-picker';
 
 const { width, height } = Dimensions.get('window');
 
@@ -52,7 +53,7 @@ const ChatScreen = ({ route, navigation }) => {
 
   // Send a message
   const handleSendMessage = async () => {
-    if (message.trim() && user && user.uid && userUid) {
+    if (message.trim() || selectedImage) {
       setIsSending(true); // Show the activity indicator when sending starts
       try {
         const chatId = [user.uid, userUid].sort().join('_');
@@ -64,17 +65,24 @@ const ChatScreen = ({ route, navigation }) => {
           .collection('messages'); // Subcollection for messages
 
         const newMessage = {
-          text: message,
+          text: message.trim(), // Add text if it exists
           senderId,
           recipientId,
           timestamp: firebase.firestore.FieldValue.serverTimestamp(), // Automatically use Firestore server timestamp
           date: new Date().toLocaleString(), // Format the date as needed
         };
 
-        // Add new message to the Firestore
+        // If there's an image selected, upload it first
+        if (selectedImage) {
+          const imageURL = await uploadImage(selectedImage); // Upload image and get URL
+          newMessage.imageURL = imageURL; // Add the image URL to the message
+        }
+
+        // Add new message (text + image if exists) to Firestore
         await messagesRef.add(newMessage);
 
         setMessage(''); // Clear the input after sending
+        setSelectedImage(null); // Clear the selected image after sending
       } catch (error) {
         console.error("Error sending message:", error);
       } finally {
@@ -83,12 +91,110 @@ const ChatScreen = ({ route, navigation }) => {
     }
   };
 
+  // Upload image to Firebase Storage
+  const uploadImage = async (uri) => {
+    try {
+      const response = await fetch(uri);
+      const blob = await response.blob();
+      
+      // Create a unique name for the image
+      const imageName = `chat_images/${Date.now()}.jpg`; // Adding .jpg or .png to the image name
+  
+      // Reference to Firebase storage
+      const storageRef = firebase.storage().ref(imageName);
+  
+      // Upload image
+      await storageRef.put(blob);  // Upload the image to Firebase
+  
+      // Get the download URL
+      const downloadURL = await storageRef.getDownloadURL();
+      console.log("Image uploaded successfully, download URL: ", downloadURL);
+      return downloadURL; // Return the download URL after upload
+    } catch (error) {
+      console.error("Error uploading image: ", error);
+      throw error;  // Re-throw error if upload fails
+    }
+  };
+  
+  
   // Scroll to the bottom of the FlatList whenever messages change
   useEffect(() => {
     if (flatListRef.current) {
       flatListRef.current.scrollToEnd({ animated: true });
     }
   }, [messages]);
+
+  const [selectedImage, setSelectedImage] = React.useState(null);
+
+
+  const handlegallery = () => {
+    // Show an alert or action sheet to select camera or gallery
+    Alert.alert(
+      "Select Image",
+      "Choose an option",
+      [
+        {
+          text: "Take Photo",
+          onPress: () => openCamera(),
+        },
+        {
+          text: "Pick from Gallery",
+          onPress: () => openGallery(),
+        },
+        {
+          text: "Cancel",
+          style: "cancel",
+        }
+      ]
+    );
+  };
+  
+  // Open Camera
+  const openCamera = () => {
+    const options = {
+      mediaType: 'photo',
+      quality: 1,
+      saveToPhotos: true,  // Save to the photo gallery after capture
+    };
+  
+    launchCamera(options, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled camera');
+      } else if (response.errorCode) {
+        console.log('Camera Error: ', response.errorMessage);
+      } else if (response.assets && response.assets.length > 0) {
+        const { uri } = response.assets[0];
+        setSelectedImage(uri);  // Set the selected image URI
+      } else {
+        console.error('Unexpected response structure:', response);
+      }
+    });
+  };
+  
+  // Open Gallery
+  const openGallery = () => {
+    const options = {
+      mediaType: 'photo',
+      quality: 1,
+    };
+
+    launchImageLibrary(options, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled gallery picker');
+      } else if (response.errorCode) {
+        console.log('Gallery Error: ', response.errorMessage);
+      } else if (response.assets && response.assets.length > 0) {
+        const { uri } = response.assets[0];
+        setSelectedImage(uri);  // Set the selected image URI
+      } else {
+        console.error('Unexpected response structure:', response);
+      }
+    });
+  };
+  const handleRemoveImage = () => {
+    setSelectedImage(null);
+  };
+
 
   return (
     <View style={styles.container}>
@@ -117,6 +223,15 @@ const ChatScreen = ({ route, navigation }) => {
         }}
       />
 
+{selectedImage && (
+        <View style={styles.imageContainer}>
+          <Image source={{ uri: selectedImage }} style={styles.selectedImage} />
+          <TouchableOpacity style={styles.closeButton} onPress={handleRemoveImage}>
+            <Icon name="closecircle" size={30} color="red" />
+          </TouchableOpacity>
+        </View>
+      )}
+
       {/* Input and Send button */}
       <View style={styles.inputContainer}>
         <TextInput
@@ -126,6 +241,9 @@ const ChatScreen = ({ route, navigation }) => {
           placeholder="Type a message"
           placeholderTextColor="gray"
         />
+  <TouchableOpacity style={styles.gallery} onPress={handlegallery}>
+  <Icon name="picture" size={30} color="gray" />
+</TouchableOpacity>
         <TouchableOpacity style={styles.sendButton} onPress={handleSendMessage}>
           {isSending ? (
             <ActivityIndicator size="small" color="#fff" /> // Show spinner when sending
@@ -215,9 +333,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  gallery:{
+    marginLeft:10,
+  },
   sendButtonText: {
     color: '#fff',
     fontSize: scaleFont(16), // Scaled font size
+  },
+  imageContainer: {
+    position: 'relative', // Make sure the close button is positioned over the image
+  },
+  selectedImage: {
+    width: 200,
+    height: 200,
+    borderRadius: 10,
+  },
+  closeButton: {
+    position: 'absolute',
+    top: -10,
+    left: 180,
+    zIndex: 1,
   },
 });
 
